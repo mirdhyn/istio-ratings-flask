@@ -40,10 +40,7 @@ tracer = FlaskTracer(jaeger_tracer)
 @tracer.trace()
 def ratings(id=None):
     parent_span = tracer.get_span(request)
-    logging.debug("parent_span_start")
-    logging.debug(parent_span)
-    logging.debug("parent_span_end")
-    with jaeger_tracer.start_span("python webserver internal span of ratings method",
+    with jaeger_tracer.start_span("SELECT Rating FROM ratings;",
                                                   child_of=parent_span) as span:
         conn = cur = None
         result = {}
